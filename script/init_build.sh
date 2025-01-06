@@ -15,7 +15,7 @@ if [ $type = "foss" ]; then
     #https://github.com/openwrt/openwrt/pull/16070
     #only necessary in 24.10 atm.
     #PATCH="https://github.com/openwrt/openwrt/pull/16070.diff"
-    case $ver in)
+    case $ver in
         "snapshot")
             PATCH="  "
             ;;

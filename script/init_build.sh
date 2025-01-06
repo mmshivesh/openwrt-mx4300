@@ -22,6 +22,7 @@ if [ $type = "foss" ]; then
         "24.10"*)
             PATCH="https://github.com/openwrt/openwrt/pull/16070.diff"
             ;;
+    esac
 elif [ $type = "nss" ]; then
     #qosmio NSS patch
     #https://github.com/qosmio/openwrt-ipq

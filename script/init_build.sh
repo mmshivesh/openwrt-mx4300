@@ -13,23 +13,33 @@ tag="" #commit hash
 if [ $type = "foss" ]; then    
     #official MX4300 PR from testuser7
     #https://github.com/openwrt/openwrt/pull/16070
-    PATCH="https://github.com/openwrt/openwrt/pull/16070.diff"
+    #only necessary in 24.10 atm.
+    #PATCH="https://github.com/openwrt/openwrt/pull/16070.diff"
+    case $ver in)
+        "snapshot")
+            PATCH="  "
+            ;;
+        "24.10"*)
+            PATCH="https://github.com/openwrt/openwrt/pull/16070.diff"
+            ;;
 elif [ $type = "nss" ]; then
     #qosmio NSS patch
     #https://github.com/qosmio/openwrt-ipq
+    #for snapshot, apply "main-nss" 
+    #for 24.10, apply both "24.10-nss" and PR16070
     case $ver in
         "snapshot")   
-            PATCH="https://github.com/openwrt/openwrt/compare/main...qosmio:openwrt-ipq:main-nss-mx4300.diff"
-            NSSBRANCH="main-nss-mx4300"
+            PATCH="https://github.com/openwrt/openwrt/compare/main...qosmio:openwrt-ipq:main-nss.diff"
+            NSSBRANCH="main-nss"
             ;;
         "24.10"*)
-            PATCH="https://github.com/openwrt/openwrt/compare/openwrt-24.10...qosmio:openwrt-ipq:24.10-nss-mx4300.diff"
-            NSSBRANCH="24.10-nss-mx4300"
+            PATCH="https://github.com/openwrt/openwrt/compare/openwrt-24.10...qosmio:openwrt-ipq:24.10-nss.diff https://github.com/openwrt/openwrt/pull/16070.diff"
+            NSSBRANCH="24.10-nss"
             ;;
     esac
 fi
 
-[ -z $PATCH ] && echo "Unsupported $type $ver" && exit 1
+[ "$PATCH" = "" ] && echo "Unsupported $type $ver" && exit 1
 
 if [ "$ver" = "snapshot" ]; then
   buildinfo="https://downloads.openwrt.org/snapshots/targets/qualcommax/ipq807x/version.buildinfo"
@@ -49,8 +59,7 @@ if [ $sync = "y" ]; then
 fi
 
 echo $PATCH
-curl -L $PATCH -o mx4300.diff
-patch -p1 < mx4300.diff
+for p in $PATCH; do curl -L $p | patch -p1; done
 
 #1. support both 24.10-snapshot and (tagged) release
 #2. Handle package/firmware/ipq-wifi/Makefile in *possible* patch failure.

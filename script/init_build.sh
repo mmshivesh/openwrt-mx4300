@@ -27,15 +27,16 @@ elif [ $type = "nss" ]; then
     #qosmio NSS patch
     #https://github.com/qosmio/openwrt-ipq
     #for snapshot, apply "main-nss" 
-    #for 24.10, apply both "24.10-nss" and PR16070
+    #for 24.10, apply "24.10-nss-mx4300" as PR16070 failed on ipq8174-mx4200.dtsi
     case $ver in
         "snapshot")   
             PATCH="https://github.com/openwrt/openwrt/compare/main...qosmio:openwrt-ipq:main-nss.diff"
             NSSBRANCH="main-nss"
             ;;
         "24.10"*)
-            PATCH="https://github.com/openwrt/openwrt/compare/openwrt-24.10...qosmio:openwrt-ipq:24.10-nss.diff https://github.com/openwrt/openwrt/pull/16070.diff"
-            NSSBRANCH="24.10-nss"
+            PATCH="https://github.com/openwrt/openwrt/compare/openwrt-24.10...qosmio:openwrt-ipq:24.10-nss-mx4300.diff"
+            #PATCH="https://github.com/openwrt/openwrt/compare/openwrt-24.10...qosmio:openwrt-ipq:24.10-nss.diff https://github.com/openwrt/openwrt/pull/16070.diff"
+            NSSBRANCH="24.10-nss-mx4300"
             ;;
     esac
 fi

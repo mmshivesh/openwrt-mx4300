@@ -81,6 +81,7 @@ if [ $type = "nss" ]; then
   if [ -f "include/kernel-6.6.rej" ]; then
       echo "##keep upstream include/kernel-6.6"
       rm include/kernel-6.6.rej
+  fi
 fi
 
 #err exit with unhandled failed patch

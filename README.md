@@ -1,3 +1,7 @@
+# Differences Compared to Base arix00/openwrt-mx4300
+
+- This repo integrates a patch adding support for Dynamic VLANs for Qualcomm ath11k devices: [commit](https://github.com/mmshivesh/openwrt-mx4300/commit/933b6cef7e282a38a4b7f8f9958af40b6ce79b70)
+
 ## About
 
 This is for Linksys LN1301/MX4300 router ~~as [no official support](https://github.com/openwrt/openwrt/pull/16070) in OpenWrt yet~~. 
